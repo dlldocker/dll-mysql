@@ -1,0 +1,18 @@
+version : '3'
+services :
+  mysql :
+    build : ./mysql # 使用Dockerfile文件
+    container_name : dll-mysql-master # 设置容器名字
+    ports :
+    - "3306:3306" # 宿主机端口:容器端口
+    environment :
+    - MYSQL_ROOT_PASSWORD=123456 # 设置mysql的root密码
+    volumes:
+    - $PWD/mysql/log/:/var/log/mysql/:rw
+    - $PWD/mysql/conf/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
+    - $PWD/mysql/data:/var/lib/mysql:rw # mysql数据文件
+    networks:
+    - dll-mysql-net # 加入网络
+
+networks: # 创建网络
+  dll-mysql-net:
